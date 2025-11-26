@@ -1,92 +1,83 @@
 create database flying_club;
 
-create table pilot (
-   pilot_id int, not null,
-   first_name varchar(50),not null,
-   last_name varchar(50),not null,
-   age int, not null,
-   gender varchar(10), not null,
-   phone varchar(15), not null,
-   email varchar(50), not null,
-   types_of_pilot varchar(50), not null
-   '(Captain,Chief Officer, and Officer)'   
-   Max_flights_per_day int, not null,
-   'Captain:2,Chief Officer:2,Officer:1'
-   primary key (flight_id),
+USE flying_club;
 
-)
-create table instructor as 
-   select * from pilot
-   where types_of_pilot = ''
-   instructor_id int, not null,
-   primary key (instructor_id)
-   foreign key(pilot_id) references pilot(pilot_id)
+CREATE TABLE IF NOT EXISTS `Pilot` (
+   `pilot_id` int NOT NULL,
+   `first_name` varchar(50) NOT NULL,
+   `last_name` varchar(50) NOT NULL,
+   `age` int NOT NULL,
+   `gender` varchar(10) NOT NULL,
+   `phone` varchar(15) NOT NULL,
+   `email` varchar(50) NOT NULL,
+   `types_of_pilot` varchar(50) NOT NULL, -- Captain, Chief Officer, and Officer
+   `Max_flights_per_day` int NOT NULL, -- Captain:2, Chief Officer:2, Officer:1
+   PRIMARY KEY (`pilot_id`)
+);
 
+CREATE TABLE `instructor` (
+   `instructor_id` int NOT NULL,
+   `pilot_id` int,
+   PRIMARY KEY (`instructor_id`),
+   FOREIGN KEY(`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
+);
 
+CREATE TABLE `passengers` (
+   `passenger_id` int NOT NULL,
+   `first_name` varchar(50) NOT NULL,
+   `last_name` varchar(50) NOT NULL,
+   `age` int NOT NULL,
+   `under_18` boolean default false NOT NULL,
+   `gender` varchar(10) NOT NULL,
+   `phone` varchar(15) NOT NULL,
+   `email` varchar(50) NOT NULL,
+   PRIMARY KEY (`passenger_id`)
+);
 
-create table passengers (
-   passenger_id int, not null,
-   first_name varchar(50), not null,
-   last_name varchar(50), not null,
-   age int, not null,
-   under_18 boolean default false,not null,
-   gender varchar(10), not null,
-   phone varchar(15), not null,
-   email varchar(50), not null,
-   PRIMARY key (passenger_id)
-)
+CREATE TABLE `flights` (
+   `flight_id` int NOT NULL,
+   `flight_type` varchar(50) NOT NULL,
+   `flight_date` date NOT NULL,
+   `flight_time` time NOT NULL,
+   `duration` varchar(10) NOT NULL, -- "30min, 60min, 120min, half-day"
+   `route` varchar(50) NOT NULL,
+   `status` varchar(50) NOT NULL, -- 'scheduled, cancelled, completed'
+   PRIMARY KEY (`flight_id`)
+);
 
-create table booking (
-   booking_id int, not null,
-   booking_name varchar(50), not null,
-   contact_number int, not null
-   flight_id int, not null,
-   passenger_id int, not null,
-   PRIMARY key(booking_id),
-   foreign key(flight_id) references flights(flight_id),
-   foreign key(passenger_id) references passengers(passenger_id)
-)
+CREATE TABLE `booking` (
+   `booking_id` int NOT NULL,
+   `booking_name` varchar(50) NOT NULL,
+   `contact_number` int NOT NULL,
+   `flight_id` int NOT NULL,
+   `passenger_id` int NOT NULL,
+   PRIMARY KEY(`booking_id`),
+   FOREIGN KEY(`flight_id`) REFERENCES `flights`(`flight_id`),
+   FOREIGN KEY(`passenger_id`) REFERENCES `passengers`(`passenger_id`)
+);
 
+CREATE TABLE `crew` (
+   `crew_id` int NOT NULL,
+   `pilot_id` int NOT NULL,
+   `role_in_flight` varchar(50) NOT NULL,
+   PRIMARY KEY (`crew_id`),
+   FOREIGN KEY(`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
+);
 
-create table crew (
-   crew_id int, not null,
-   pilot_id int, not null,
-   role_in_flight varchar(50), not null,
-   PRIMARY key (crew_id)
-   foreign key(pilot_id) references pilot(pilot_id)
-)
+CREATE TABLE `passengers_flight` (
+   `passenger_id` int NOT NULL,
+   `flight_id` int NOT NULL,
+   PRIMARY KEY (`passenger_id`, `flight_id`),
+   FOREIGN KEY(`passenger_id`) REFERENCES `passengers`(`passenger_id`),
+   FOREIGN KEY(`flight_id`) REFERENCES `flights`(`flight_id`)
+);
 
-create table passengers_flight (
+CREATE TABLE `pleasure_flight` AS
+   SELECT f.flight_id, f.flight_type, c.crew_id
+   FROM flights f, crew c -- This is a CROSS JOIN, consider adding a JOIN condition
+   WHERE f.flight_type = 'pleasure';
 
-   passenger_id int, not null,
-   flight_id int, not null,
-   PRIMARY key (passenger_id, flight_id),
-   foreign key(passenger_id) references passengers(passenger_id),
-   foreign key(flight_id) references flights(flight_id)
-)
-
-
-create table flights (
-   flight_id int, not null,
-   flight_type varchar(50), not null,
-   flight_date date, not null,
-   flight_time time, not null,
-   duration varchar(10), not null,
-   "30min, 60min, 120min, half-day"
-   route varchar(50), not null,
-   status varchar(50), not null,
-   'scheduled, cancelled, completed'
-   PRIMARY key (flight_id)
-)
-
-
-
-create table pleasure_flight as 
-   select * from flights, crew
-   where flight_type = 'pleasure'
-   
-create table traning_flight as 
-   select * from flights, crew
-   where flight_type = 'training'
-   
-
+CREATE TABLE `traning_flight` AS
+   SELECT f.flight_id, f.flight_type, c.crew_id
+   FROM flights f, crew c -- This is a CROSS JOIN, consider adding a JOIN condition
+   WHERE f.flight_type = 'training';
