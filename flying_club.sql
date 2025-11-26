@@ -1,83 +1,89 @@
-create database flying_club;
+CREATE DATABASE flying_club;
+USE flying_club;
 
-CREATE TABLE IF NOT EXISTS `Pilot` (
-   `pilot_id` int NOT NULL,
-   `first_name` varchar(50) NOT NULL,
-   `last_name` varchar(50) NOT NULL,
-   `age` int NOT NULL,
-   `gender` varchar(10) NOT NULL,
-   `phone` varchar(15) NOT NULL,
-   `email` varchar(50) NOT NULL,
-   `types_of_pilot` varchar(50) NOT NULL, -- Captain, Chief Officer, and Officer
-   `Max_flights_per_day` int NOT NULL, -- Captain:2, Chief Officer:2, Officer:1
+-- Table for pilots
+CREATE TABLE `Pilot` (
+   `pilot_id` INT NOT NULL AUTO_INCREMENT,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `age` INT NOT NULL,
+   `gender` VARCHAR(10) NOT NULL,
+   `phone` VARCHAR(15) NOT NULL,
+   `email` VARCHAR(50) NOT NULL UNIQUE,
+   `pilot_role` ENUM('Captain', 'Chief Officer', 'Officer') NOT NULL,
    PRIMARY KEY (`pilot_id`)
 );
 
-CREATE TABLE `instructor` (
-   `instructor_id` int NOT NULL,
-   `pilot_id` int,
+-- Table for instructors, who are also pilots
+CREATE TABLE `Instructor` (
+   `instructor_id` INT NOT NULL AUTO_INCREMENT,
+   `pilot_id` INT NOT NULL,
    PRIMARY KEY (`instructor_id`),
    FOREIGN KEY(`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
 );
 
-CREATE TABLE `passengers` (
-   `passenger_id` int NOT NULL,
-   `first_name` varchar(50) NOT NULL,
-   `last_name` varchar(50) NOT NULL,
-   `age` int NOT NULL,
-   `under_18` boolean default false NOT NULL,
-   `gender` varchar(10) NOT NULL,
-   `phone` varchar(15) NOT NULL,
-   `email` varchar(50) NOT NULL,
+-- Table for passengers
+CREATE TABLE `Passenger` (
+   `passenger_id` INT NOT NULL AUTO_INCREMENT,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `age` INT NOT NULL,
+   `gender` VARCHAR(10) NOT NULL,
+   `phone` VARCHAR(15) NOT NULL,
+   `email` VARCHAR(50) NOT NULL UNIQUE,
    PRIMARY KEY (`passenger_id`)
 );
 
-CREATE TABLE `flights` (
-   `flight_id` int NOT NULL,
-   `flight_type` varchar(50) NOT NULL,
-   `flight_date` date NOT NULL,
-   `flight_time` time NOT NULL,
-   `duration` varchar(10) NOT NULL, -- "30min, 60min, 120min, half-day"
-   `route` varchar(50) NOT NULL,
-   `status` varchar(50) NOT NULL, -- 'scheduled, cancelled, completed'
-   `crew_id` int NOT NULL,
-   PRIMARY KEY (`flight_id`)
-   FOREIGN KEY(`crew_id`) REFERENCES `crew`(`crew_id`)
+-- Table for all flights
+CREATE TABLE `Flight` (
+   `flight_id` INT NOT NULL AUTO_INCREMENT,
+   `flight_type` ENUM('pleasure', 'training') NOT NULL,
+   `flight_date` DATE NOT NULL,
+   `start_time` TIME NOT NULL,
+   `time_slot` ENUM('morning', 'afternoon') NOT NULL,
+   `duration` ENUM('30min', '60min', '120min', 'half-day'), -- Null for training flights
+   `route` VARCHAR(50),
+   `status` ENUM('scheduled', 'cancelled', 'completed') NOT NULL,
+   `instructor_id` INT, -- Null for pleasure flights
+   PRIMARY KEY (`flight_id`),
+   FOREIGN KEY(`instructor_id`) REFERENCES `Instructor`(`instructor_id`),
+   CONSTRAINT chk_flight_rules CHECK (
+       (flight_type = 'training' AND instructor_id IS NOT NULL AND duration IS NULL) OR
+       (flight_type = 'pleasure' AND instructor_id IS NULL AND duration IS NOT NULL)
+   )
 );
 
-CREATE TABLE `booking` (
-   `booking_id` int NOT NULL,
-   `booking_name` varchar(50) NOT NULL,
-   `contact_number` int NOT NULL,
-   `flight_id` int NOT NULL,
-   `passenger_id` int NOT NULL,
-   PRIMARY KEY(`booking_id`),
-   FOREIGN KEY(`flight_id`) REFERENCES `flights`(`flight_id`),
-   FOREIGN KEY(`passenger_id`) REFERENCES `passengers`(`passenger_id`)
+-- Table to assign pilots to flights
+CREATE TABLE `FlightCrew` (
+    `flight_id` INT NOT NULL,
+    `pilot_id` INT NOT NULL,
+    PRIMARY KEY (`flight_id`, `pilot_id`),
+    FOREIGN KEY (`flight_id`) REFERENCES `Flight`(`flight_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
 );
 
-CREATE TABLE `crew` (
-   `crew_id` int NOT NULL,
-   `pilot_id` int NOT NULL,
-   `role_in_flight` varchar(50) NOT NULL,
-   PRIMARY KEY (`crew_id`),
-   FOREIGN KEY(`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
+-- Table for booking parties for pleasure flights
+CREATE TABLE `BookingParty` (
+    `party_id` INT NOT NULL AUTO_INCREMENT,
+    `flight_id` INT NOT NULL,
+    `contact_passenger_id` INT NOT NULL,
+    PRIMARY KEY (`party_id`),
+    FOREIGN KEY (`flight_id`) REFERENCES `Flight`(`flight_id`),
+    FOREIGN KEY (`contact_passenger_id`) REFERENCES `Passenger`(`passenger_id`)
 );
 
-CREATE TABLE `passengers_flight` (
-   `passenger_id` int NOT NULL,
-   `flight_id` int NOT NULL,
-   PRIMARY KEY (`passenger_id`, `flight_id`),
-   FOREIGN KEY(`passenger_id`) REFERENCES `passengers`(`passenger_id`),
-   FOREIGN KEY(`flight_id`) REFERENCES `flights`(`flight_id`)
+-- Table to link passengers to a booking party
+CREATE TABLE `PartyMember` (
+    `party_id` INT NOT NULL,
+    `passenger_id` INT NOT NULL,
+    PRIMARY KEY (`party_id`, `passenger_id`),
+    FOREIGN KEY (`party_id`) REFERENCES `BookingParty`(`party_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`passenger_id`) REFERENCES `Passenger`(`passenger_id`)
 );
 
-CREATE TABLE `pleasure_flight` AS
-   SELECT f.flight_id, f.flight_type, c.crew_id
-   FROM flights f, crew c -- This is a CROSS JOIN, consider adding a JOIN condition
-   WHERE f.flight_type = 'pleasure';
+-- Views for convenience
+CREATE OR REPLACE VIEW `pleasure_flights_view` AS
+    SELECT * FROM `Flight` WHERE `flight_type` = 'pleasure';
 
-CREATE TABLE `traning_flight` AS
-   SELECT f.flight_id, f.flight_type, c.crew_id
-   FROM flights f, crew c -- This is a CROSS JOIN, consider adding a JOIN condition
-   WHERE f.flight_type = 'training';
+CREATE OR REPLACE VIEW `training_flights_view` AS
+    SELECT * FROM `Flight` WHERE `flight_type` = 'training';
