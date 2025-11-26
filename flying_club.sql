@@ -1,7 +1,5 @@
 create database flying_club;
 
-USE flying_club;
-
 CREATE TABLE IF NOT EXISTS `Pilot` (
    `pilot_id` int NOT NULL,
    `first_name` varchar(50) NOT NULL,
@@ -42,7 +40,9 @@ CREATE TABLE `flights` (
    `duration` varchar(10) NOT NULL, -- "30min, 60min, 120min, half-day"
    `route` varchar(50) NOT NULL,
    `status` varchar(50) NOT NULL, -- 'scheduled, cancelled, completed'
+   `crew_id` int NOT NULL,
    PRIMARY KEY (`flight_id`)
+   FOREIGN KEY(`crew_id`) REFERENCES `crew`(`crew_id`)
 );
 
 CREATE TABLE `booking` (
