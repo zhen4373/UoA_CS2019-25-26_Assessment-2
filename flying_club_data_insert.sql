@@ -14,3 +14,19 @@ INSERT INTO 'passenger' ('passenger_id', 'first_name', 'last_name','age','gender
 
 
 
+INSERT INTO 'Pilot'('pilot_id','first_name','last_name','age','gender','phone','email','pilot_role') VALUES
+('PI001', 'Ann', 'Beech','30','F','0141-848-1825', 'AnnBeech@email.com', 'Officer');
+('PI002', 'Mary', 'Howe','35','F','01224-196720', 'MaryHowe@email.com', 'Officer');
+('PI003', 'David', 'Ford','40','M','01475-392178', 'DavidFord@email.com', 'Officer');
+('PI004', 'Susan', 'Brand','45','F','0207-774-5632', 'SusanBrand@email.com', 'Chief Officer');
+('PI005', 'John', 'White','50','M','0207-774-5632', 'JohnWhite@email.com', 'Chief Officer');
+('PI006', 'Julie', 'Lee','55','F','0207-774-5632', 'JulieLee@email.com', 'Captain');
+
+
+--INSERT INTO `staff` (`StaffNo`, `Fname`, `Lname`, `Position`, `Sex`, `DOB`, `Salary`, `BranchNo`) VALUES
+--('SG37', 'Ann', 'Beech', 'Assistant', 'F', '1960-10-11 00:00:00', 12000, 'B005'),
+--('SA9', 'Mary', 'Howe', 'Assistant', 'F', '1970-02-19 00:00:00', 9000, 'B007'),
+--('SG14', 'David', 'Ford', 'Supervisor', 'M', '1958-03-24 00:00:00', 18000, 'B003'),
+--('SG5', 'Susan', 'Brand', 'Manager', 'F', '1940-06-03 00:00:00', 24000, 'B003'),
+--('SL21', 'John', 'White', 'Manager', 'M', '1945-10-01 00:00:00', 30000, 'B005'),
+--('SL41', 'Julie', 'Lee', 'Assistant', 'F', '1965-06-13 00:00:00', 90000, 'B005');
