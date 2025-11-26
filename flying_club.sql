@@ -15,6 +15,13 @@ create table pilot (
    primary key (flight_id),
 
 )
+create table instructor as 
+   select * from pilot
+   where types_of_pilot = ''
+   instructor_id int, not null,
+   primary key (instructor_id)
+   foreign key(pilot_id) references pilot(pilot_id)
+
 
 
 create table passengers (
@@ -49,6 +56,15 @@ create table crew (
    foreign key(pilot_id) references pilot(pilot_id)
 )
 
+create table passengers_flight (
+
+   passenger_id int, not null,
+   flight_id int, not null,
+   PRIMARY key (passenger_id, flight_id),
+   foreign key(passenger_id) references passengers(passenger_id),
+   foreign key(flight_id) references flights(flight_id)
+)
+
 
 create table flights (
    flight_id int, not null,
@@ -65,5 +81,12 @@ create table flights (
 
 
 
-
+create table pleasure_flight as 
+   select * from flights, crew
+   where flight_type = 'pleasure'
+   
+create table traning_flight as 
+   select * from flights, crew
+   where flight_type = 'training'
+   
 
