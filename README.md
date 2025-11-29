@@ -15,8 +15,8 @@ It includes:
 *   **Auto-increment Initialization**: `ALTER TABLE` statements to set the starting values for auto-incrementing primary keys.
 
 ### 2. `Transaction requirements.sql`
-*   Listing all trainee officers piloting a flight on a given day.
-*   Finding all pilots assigned to a specific pleasure flight.
-*   Listing all pleasure flights undertaken by a given pilot.
-*   Retrieving the phone number of a specific passenger.
-*   Listing all training flights for a given instructor on a specific date.
+# 1.  Listing all trainee officers piloting a flight on a given day.
+# 2.  Finding all pilots assigned to a specific pleasure flight.
+# 3.  Listing all pleasure flights undertaken by a given pilot.
+# 4.  Retrieving the phone number of a specific passenger.
+# 5.  Listing all training flights for a given instructor on a specific date.
