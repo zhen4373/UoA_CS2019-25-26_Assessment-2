@@ -1,24 +1,29 @@
+-- Table for pilots
 CREATE TABLE `Pilot` (
    `pilot_id` INT NOT NULL AUTO_INCREMENT,
    `first_name` VARCHAR(50) NOT NULL,
    `last_name` VARCHAR(50) NOT NULL,
    `age` INT NOT NULL,
-   `date_of_birth` DATE NOT NULL,
-   `gender` VARCHAR(10) NOT NULL,
    `phone` VARCHAR(15) NOT NULL,
    `email` VARCHAR(50) NOT NULL UNIQUE,
    `pilot_role` ENUM('Captain', 'Chief Officer', 'Officer') NOT NULL,
    PRIMARY KEY (`pilot_id`)
 );
 
-INSERT INTO 'Pilot'('pilot_id','first_name','last_name','age','date_of_birth','gender','phone','email','pilot_role') VALUES
-('5069001', 'Ann', 'Beech','30','1990-01-01','F','0141-848-1825', 'AnnBeech@email.com', 'Officer');
-('5069002', 'Mary', 'Howe','35','1985-02-02','F','01224-196720', 'MaryHowe@email.com', 'Officer');
-('5069003', 'David', 'Ford','40','1980-03-03','M','01475-392178', 'DavidFord@email.com', 'Officer');
-('5069004', 'Susan', 'Brand','45','1975-04-04','F','0207-774-5632', 'SusanBrand@email.com', 'Chief Officer');
-('5069005', 'John', 'White','50','1970-05-05','M','0207-774-5632', 'JohnWhite@email.com', 'Chief Officer');
-('5069006', 'Julie', 'Lee','55','1965-06-06','F','0207-774-5632', 'JulieLee@email.com', 'Captain');
+-- Set the starting value for pilot_id
+ALTER TABLE `Pilot` AUTO_INCREMENT = 5069001;
 
+-- Insert data into the Pilot table
+INSERT INTO `Pilot` (`first_name`, `last_name`, `age`, `phone`, `email`, `pilot_role`) VALUES
+('Ann', 'Beech', 30, '0141-848-1825', 'AnnBeech@email.com', 'Officer'),
+('Mary', 'Howe', 35, '01224-196720', 'MaryHowe@email.com', 'Officer'),
+('David', 'Ford', 40, '01475-392178', 'DavidFord@email.com', 'Officer'),
+('Susan', 'Brand', 45, '0207-774-5632', 'SusanBrand@email.com', 'Chief Officer'),
+('John', 'White', 50, '0207-774-5632', 'JohnWhite@email.com', 'Chief Officer'),
+('Julie', 'Lee', 55, '0207-774-5632', 'JulieLee@email.com', 'Captain');
+
+-- Table for instructors, who are also pilots
+-- The flying club employs 8 instructors. This is a data requirement.
 CREATE TABLE `Instructor` (
    `instructor_id` INT NOT NULL AUTO_INCREMENT,
    `pilot_id` INT NOT NULL,
@@ -26,26 +31,27 @@ CREATE TABLE `Instructor` (
    FOREIGN KEY(`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
 );
 
-
+-- Table for passengers
 CREATE TABLE `Passenger` (
    `passenger_id` INT NOT NULL AUTO_INCREMENT,
    `first_name` VARCHAR(50) NOT NULL,
    `last_name` VARCHAR(50) NOT NULL,
    `age` INT NOT NULL,
-   `date_of_birth` DATE NOT NULL,
-   `gender` VARCHAR(10) NOT NULL,
    `phone` VARCHAR(15) NOT NULL,
    `email` VARCHAR(50) NOT NULL UNIQUE,
    PRIMARY KEY (`passenger_id`)
 );
+-- Set the starting value for passenger_id
+ALTER TABLE `Passenger` AUTO_INCREMENT = 5061001;
 
-INSERT INTO 'passenger' ('passenger_id', 'first_name', 'last_name','age','date_of_birth','gender','phone', 'email') VALUES 
-('5061001', 'Aline', 'Stewart','25','1999-01-01','M','0141-848-1825', 'AlineStewart@email.com');
-('5061002', 'Mary', 'Tregear','30','1994-02-02','F','01224-196720', 'MaryTregear@email.com');
-('5061003', 'Mike', 'Ritchie','35','1990-03-03','M','01475-392178', 'MikeRitchie@email.com');
-('5061004', 'John', 'Kay','40','1985-04-04','M','0207-774-5632', 'JohnKay@email.com');
+-- Insert data into the Passenger table
+INSERT INTO `Passenger` (`first_name`, `last_name`, `age`, `phone`, `email`) VALUES
+('Aline', 'Stewart', 25, '0141-848-1825', 'AlineStewart@email.com'),
+('Mary', 'Tregear', 30, '01224-196720', 'MaryTregear@email.com'),
+('Mike', 'Ritchie', 35, '01475-392178', 'MikeRitchie@email.com'),
+('John', 'Kay', 40, '0207-774-5632', 'JohnKay@email.com');
 
-
+-- Table for all flights
 CREATE TABLE `Flight` (
    `flight_id` INT NOT NULL AUTO_INCREMENT,
    `flight_type` ENUM('pleasure', 'training') NOT NULL,
@@ -64,7 +70,7 @@ CREATE TABLE `Flight` (
    )
 );
 
-
+-- Table to assign pilots to flights
 CREATE TABLE `FlightCrew` (
     `flight_id` INT NOT NULL,
     `pilot_id` INT NOT NULL,
@@ -74,7 +80,6 @@ CREATE TABLE `FlightCrew` (
 );
 
 -- Table for booking parties for pleasure flights
-
 CREATE TABLE `BookingParty` (
     `party_id` INT NOT NULL AUTO_INCREMENT,
     `flight_id` INT NOT NULL,
@@ -85,7 +90,6 @@ CREATE TABLE `BookingParty` (
 );
 
 -- Table to link passengers to a booking party
-
 CREATE TABLE `PartyMember` (
     `party_id` INT NOT NULL,
     `passenger_id` INT NOT NULL,
@@ -95,7 +99,6 @@ CREATE TABLE `PartyMember` (
 );
 
 -- Views for convenience
-
 CREATE OR REPLACE VIEW `pleasure_flights_view` AS
     SELECT * FROM `Flight` WHERE `flight_type` = 'pleasure';
 
