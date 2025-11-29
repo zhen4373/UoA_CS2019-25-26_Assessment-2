@@ -23,13 +23,15 @@ INSERT INTO `Pilot` (`first_name`, `last_name`, `age`, `phone`, `email`, `pilot_
 ('Julie', 'Lee', 55, '0207-774-5632', 'JulieLee@email.com', 'Captain');
 
 -- Table for instructors, who are also pilots
--- The flying club employs 8 instructors. This is a data requirement.
 CREATE TABLE `Instructor` (
    `instructor_id` INT NOT NULL AUTO_INCREMENT,
    `pilot_id` INT NOT NULL,
    PRIMARY KEY (`instructor_id`),
    FOREIGN KEY(`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
 );
+
+-- Set the starting value for instructor_id
+ALTER TABLE `Instructor` AUTO_INCREMENT = 4906001;
 
 -- Table for passengers
 CREATE TABLE `Passenger` (
@@ -41,6 +43,7 @@ CREATE TABLE `Passenger` (
    `email` VARCHAR(50) NOT NULL UNIQUE,
    PRIMARY KEY (`passenger_id`)
 );
+
 -- Set the starting value for passenger_id
 ALTER TABLE `Passenger` AUTO_INCREMENT = 5061001;
 
@@ -49,7 +52,9 @@ INSERT INTO `Passenger` (`first_name`, `last_name`, `age`, `phone`, `email`) VAL
 ('Aline', 'Stewart', 25, '0141-848-1825', 'AlineStewart@email.com'),
 ('Mary', 'Tregear', 30, '01224-196720', 'MaryTregear@email.com'),
 ('Mike', 'Ritchie', 35, '01475-392178', 'MikeRitchie@email.com'),
-('John', 'Kay', 40, '0207-774-5632', 'JohnKay@email.com');
+('John', 'Kay', 40, '0207-774-5632', 'JohnKay@email.com'),
+('Julie', 'White', 55, '0207-774-5632', 'JulieWhite@email.com'),
+('Aydan','White', 15, '0207-774-5632', 'AydanWhite@email.com');
 
 -- Table for all flights
 CREATE TABLE `Flight` (
@@ -58,10 +63,10 @@ CREATE TABLE `Flight` (
    `flight_date` DATE NOT NULL,
    `start_time` TIME NOT NULL,
    `time_slot` ENUM('morning', 'afternoon') NOT NULL,
-   `duration` ENUM('30min', '60min', '120min', 'half-day'), -- Null for training flights
+   `duration` ENUM('30min', '60min', '120min', 'half-day'),
    `route` VARCHAR(50),
    `status` ENUM('scheduled', 'cancelled', 'completed') NOT NULL,
-   `instructor_id` INT, -- Null for pleasure flights
+   `instructor_id` INT,
    PRIMARY KEY (`flight_id`),
    FOREIGN KEY(`instructor_id`) REFERENCES `Instructor`(`instructor_id`),
    CONSTRAINT chk_flight_rules CHECK (
