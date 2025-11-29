@@ -30,3 +30,6 @@ INSERT INTO 'Pilot'('pilot_id','first_name','last_name','age','date_of_birth','g
 --('SG5', 'Susan', 'Brand', 'Manager', 'F', '1940-06-03 00:00:00', 24000, 'B003'),
 --('SL21', 'John', 'White', 'Manager', 'M', '1945-10-01 00:00:00', 30000, 'B005'),
 --('SL41', 'Julie', 'Lee', 'Assistant', 'F', '1965-06-13 00:00:00', 90000, 'B005');
+
+
+
