@@ -12,12 +12,12 @@ CREATE TABLE `Pilot` (
 );
 
 INSERT INTO 'Pilot'('pilot_id','first_name','last_name','age','date_of_birth','gender','phone','email','pilot_role') VALUES
-('PI001', 'Ann', 'Beech','30','1990-01-01','F','0141-848-1825', 'AnnBeech@email.com', 'Officer');
-('PI002', 'Mary', 'Howe','35','1985-02-02','F','01224-196720', 'MaryHowe@email.com', 'Officer');
-('PI003', 'David', 'Ford','40','1980-03-03','M','01475-392178', 'DavidFord@email.com', 'Officer');
-('PI004', 'Susan', 'Brand','45','1975-04-04','F','0207-774-5632', 'SusanBrand@email.com', 'Chief Officer');
-('PI005', 'John', 'White','50','1970-05-05','M','0207-774-5632', 'JohnWhite@email.com', 'Chief Officer');
-('PI006', 'Julie', 'Lee','55','1965-06-06','F','0207-774-5632', 'JulieLee@email.com', 'Captain');
+('5069001', 'Ann', 'Beech','30','1990-01-01','F','0141-848-1825', 'AnnBeech@email.com', 'Officer');
+('5069002', 'Mary', 'Howe','35','1985-02-02','F','01224-196720', 'MaryHowe@email.com', 'Officer');
+('5069003', 'David', 'Ford','40','1980-03-03','M','01475-392178', 'DavidFord@email.com', 'Officer');
+('5069004', 'Susan', 'Brand','45','1975-04-04','F','0207-774-5632', 'SusanBrand@email.com', 'Chief Officer');
+('5069005', 'John', 'White','50','1970-05-05','M','0207-774-5632', 'JohnWhite@email.com', 'Chief Officer');
+('5069006', 'Julie', 'Lee','55','1965-06-06','F','0207-774-5632', 'JulieLee@email.com', 'Captain');
 
 CREATE TABLE `Instructor` (
    `instructor_id` INT NOT NULL AUTO_INCREMENT,
@@ -40,10 +40,10 @@ CREATE TABLE `Passenger` (
 );
 
 INSERT INTO 'passenger' ('passenger_id', 'first_name', 'last_name','age','date_of_birth','gender','phone', 'email') VALUES 
-('P001', 'Aline', 'Stewart','25','1999-01-01','M','0141-848-1825', 'AlineStewart@email.com');
-('P002', 'Mary', 'Tregear','30','1994-02-02','F','01224-196720', 'MaryTregear@email.com');
-('P003', 'Mike', 'Ritchie','35','1990-03-03','M','01475-392178', 'MikeRitchie@email.com');
-('P004', 'John', 'Kay','40','1985-04-04','M','0207-774-5632', 'JohnKay@email.com');
+('5061001', 'Aline', 'Stewart','25','1999-01-01','M','0141-848-1825', 'AlineStewart@email.com');
+('5061002', 'Mary', 'Tregear','30','1994-02-02','F','01224-196720', 'MaryTregear@email.com');
+('5061003', 'Mike', 'Ritchie','35','1990-03-03','M','01475-392178', 'MikeRitchie@email.com');
+('5061004', 'John', 'Kay','40','1985-04-04','M','0207-774-5632', 'JohnKay@email.com');
 
 
 CREATE TABLE `Flight` (
