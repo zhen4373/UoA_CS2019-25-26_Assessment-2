@@ -11,7 +11,6 @@ It includes:
     *   `TrainingFlight`: A specialized table for training flights, linked to `Flight` and `Instructor`.
     *   `PleasureFlight`: A specialized table for pleasure flights, linked to `Flight` and `Party`.
     *   `Crew`: Assigns pilots to specific flights.
-    *   `PartyMember`: Links passengers to a booking party.
 *   **Auto-increment Initialization**: `ALTER TABLE` statements to set the starting values for auto-incrementing primary keys.
 
 ### 2. `Transaction requirements.sql`

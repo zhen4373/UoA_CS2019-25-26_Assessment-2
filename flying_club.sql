@@ -141,20 +141,3 @@ INSERT INTO `Crew` (`flight_id`, `pilot_id`, `role`) VALUES
 (46003, 5069003, 'First'),
 (46003, 5069004, 'Second');
 
-
-
--- Table to link passengers to a booking party
-CREATE TABLE `PartyMember` (
-    `party_id` INT NOT NULL,
-    `passenger_id` INT NOT NULL,
-    PRIMARY KEY (`party_id`, `passenger_id`),
-    FOREIGN KEY (`party_id`) REFERENCES `Party`(`party_id`) ON DELETE CASCADE,
-    FOREIGN KEY (`passenger_id`) REFERENCES `Passenger`(`passenger_id`)
-);
-
-INSERT INTO `PartyMember` (`party_id`, `passenger_id`) VALUES
-(5072001, 5061001),
-(5072001, 5061002),
-(5072002, 5061004),
-(5072002, 5061005),
-(5072002, 5061006);
