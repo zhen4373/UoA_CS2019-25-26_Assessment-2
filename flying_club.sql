@@ -46,7 +46,6 @@ ALTER TABLE `Instructor` AUTO_INCREMENT = 4906001;
 INSERT INTO `Instructor` (`first_name`, `last_name`, `age`, `phone`, `email`) VALUES
 ('Jane', 'Doe', 40, '0207-774-5632', 'JaneDoe@email.com');
 
-
 CREATE TABLE `Party` (
     `party_id` INT NOT NULL AUTO_INCREMENT,
     `point_of_contact_ID` VARCHAR(10) NOT NULL,
@@ -56,8 +55,15 @@ CREATE TABLE `Party` (
     `email` VARCHAR(50) NOT NULL UNIQUE,
     PRIMARY KEY (`party_id`)
 );
+ALTER TABLE `Party` AUTO_INCREMENT = 5072001;
 
 
+
+INSERT INTO `Party` (`point_of_contact_ID`, `booking_Fname`, `booking_Lname`, `phone`, `email`) VALUES
+('PC001', 'Aline', 'Stewart', '0141-848-1825', 'AlineStewart@email.com'),
+('PC002', 'John', 'Kay', '0207-774-5632', 'JohnKay@email.com');
+
+-- Table for passengers
 CREATE TABLE `Passenger` (
    `passenger_id` INT NOT NULL AUTO_INCREMENT,
    `first_name` VARCHAR(50) NOT NULL,
@@ -90,6 +96,7 @@ CREATE TABLE `Flight` (
    `status` ENUM('scheduled', 'cancelled', 'completed') NOT NULL,
    PRIMARY KEY (`flight_id`)
 );
+ALTER TABLE `Flight` AUTO_INCREMENT = 46001;
 
 
 CREATE TABLE `TrainingFlight` (
@@ -100,6 +107,8 @@ CREATE TABLE `TrainingFlight` (
     FOREIGN KEY (`instructor_id`) REFERENCES `Instructor`(`instructor_id`)
 );
 
+INSERT INTO `TrainingFlight` (`flight_id`, `instructor_id`) VALUES
+(46002, 4906001);
 
 CREATE TABLE `PleasureFlight` (
     `flight_id` INT NOT NULL,
@@ -111,18 +120,30 @@ CREATE TABLE `PleasureFlight` (
     FOREIGN KEY (`party_id`) REFERENCES `Party`(`party_id`)
 );
 
+INSERT INTO `PleasureFlight` (`flight_id`, `status`, `max_passengers`, `party_id`) VALUES
+(46001, 'scheduled', 3, 5072001),
+(46003, 'completed', 2, 5072002);
 
+-- Table to assign pilots to flights
 CREATE TABLE `Crew` (
     `Crew_ID` INT NOT NULL,
     `flight_id` INT NOT NULL,
     `pilot_id` INT NOT NULL,
-    `role` VARCHAR(25) NOT NULL,
+    `role` ENUM('First', 'Second') NOT NULL,
     PRIMARY KEY (`Crew_ID`),
     FOREIGN KEY (`flight_id`) REFERENCES `Flight`(`flight_id`),
     FOREIGN KEY (`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
 );
+ALTER TABLE `Crew` AUTO_INCREMENT = 4372001;
+INSERT INTO `Crew` (`flight_id`, `pilot_id`, `role`) VALUES
+(46001, 5069001, 'First'),
+(46001, 5069002, 'Second'),
+(46003, 5069003, 'First'),
+(46003, 5069004, 'Second');
 
 
+
+-- Table to link passengers to a booking party
 CREATE TABLE `PartyMember` (
     `party_id` INT NOT NULL,
     `passenger_id` INT NOT NULL,
@@ -130,3 +151,10 @@ CREATE TABLE `PartyMember` (
     FOREIGN KEY (`party_id`) REFERENCES `Party`(`party_id`) ON DELETE CASCADE,
     FOREIGN KEY (`passenger_id`) REFERENCES `Passenger`(`passenger_id`)
 );
+
+INSERT INTO `PartyMember` (`party_id`, `passenger_id`) VALUES
+(5072001, 5061001),
+(5072001, 5061002),
+(5072002, 5061004),
+(5072002, 5061005),
+(5072002, 5061006);
