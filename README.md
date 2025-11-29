@@ -15,7 +15,6 @@ It includes:
 *   **Auto-increment Initialization**: `ALTER TABLE` statements to set the starting values for auto-incrementing primary keys.
 
 ### 2. `Transaction requirements.sql`
-These queries serve as examples for common transactional operations, such as:
 *   Listing all trainee officers piloting a flight on a given day.
 *   Finding all pilots assigned to a specific pleasure flight.
 *   Listing all pleasure flights undertaken by a given pilot.
