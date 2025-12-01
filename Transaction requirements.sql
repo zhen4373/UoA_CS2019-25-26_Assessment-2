@@ -1,5 +1,5 @@
 -- 1. List all the trainee officers piloting a flight on a given day.
-SELECT p.pilot_id, p.first_name, p.last_name, f.flight_id, f.flight_date
+SELECT p.pilot_id, p.first_name, p.last_name, r.rank_name, f.flight_id, f.flight_date
 FROM `Pilot` p
 JOIN `Crew` c ON p.pilot_id = c.pilot_id
 JOIN `Flight` f ON c.flight_id = f.flight_id
@@ -9,11 +9,12 @@ WHERE r.rank_name = 'Officer' AND f.flight_date = '2024-08-01'; -- Replace with 
 
 
 -- 2. List all the pilots on a given pleasure flight.
-SELECT p.pilot_id, p.first_name, p.last_name, r.rank_name
+SELECT p.pilot_id, p.first_name, p.last_name, r.rank_name, f.flight_id, f.flight_date
 FROM `Pilot` p
 JOIN `Crew` c ON p.pilot_id = c.pilot_id
 JOIN `Rank` r ON p.rank_id = r.rank_id
-WHERE c.flight_id = 46001; -- Replace with the desired flight_id.
+JOIN `Flight` f ON c.flight_id = f.flight_id
+WHERE f.flight_type = 'pleasure';
 
 
 

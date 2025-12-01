@@ -157,9 +157,13 @@ CREATE TABLE `Crew` (
 ALTER TABLE `Crew` AUTO_INCREMENT = 4372001;
 
 INSERT INTO `Crew` (`flight_id`, `pilot_id`, `role`) VALUES
-(46001, 5069001, 'First'),
-(46001, 5069002, 'Second'),
-(46003, 5069003, 'First'),
-(46003, 5069004, 'Second'),
-(46004, 5069007, 'First'),
-(46005, 5069008, 'Second');
+(46001, 5069003, 'First'), 
+(46001, 5069009, 'Second'), 
+(46002, 5069004, 'First'),
+(46002, 5069001, 'Second'),
+(46003, 5069010, 'First'), 
+(46003, 5069002, 'Second'), 
+(46004, 5069005, 'First'), 
+(46004, 5069008, 'Second'),
+(46005, 5069006, 'First'), 
+(46005, 5069007, 'Second'); 
