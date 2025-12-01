@@ -148,7 +148,6 @@ INSERT INTO `PleasureFlight` (`flight_id`, `status`, `max_passengers`, `party_id
 (46009, 'scheduled', 4, 5072004),
 (46010, 'scheduled', 2, 5072005);
 
--- Table to assign pilots to flights
 CREATE TABLE `Crew` (
     `Crew_ID` INT NOT NULL AUTO_INCREMENT,
     `flight_id` INT NOT NULL,
