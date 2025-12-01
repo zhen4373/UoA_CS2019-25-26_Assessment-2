@@ -92,7 +92,7 @@ ALTER TABLE `Passenger` AUTO_INCREMENT = 5061001;
 INSERT INTO `Passenger` (`first_name`, `last_name`, `age`, `phone`, `email`, `party_id`) VALUES
 ('Aline', 'Stewart', 25, '0141-848-1825', 'AlineStewart@email.com', 5072001),
 ('Mary', 'Tregear', 30, '01224-196720', 'MaryTregear@email.com', 5072001),
-('Mike', 'Ritchie', 35, '01475-392178', 'MikeRitchie@email.com', NULL),
+('Mike', 'Ritchie', 35, '01475-392178', 'MikeRitchie@email.com', 5072001),
 ('John', 'Kay', 40, '0207-774-5632', 'JohnKay@email.com', 5072002),
 ('Julie', 'White', 55, '0207-774-5632', 'JulieWhite@email.com', 5072002),
 ('Aydan','White', 15, '0207-774-5632', 'AydanWhite@email.com', 5072002),
