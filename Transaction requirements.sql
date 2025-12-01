@@ -4,7 +4,7 @@ FROM `Pilot` p
 JOIN `Crew` c ON p.pilot_id = c.pilot_id
 JOIN `Flight` f ON c.flight_id = f.flight_id
 JOIN `Rank` r ON p.rank_id = r.rank_id
-WHERE r.rank_name = 'Officer' AND f.flight_date = '2024-08-01'; -- Replace with the desired date.
+WHERE r.rank_name = 'Officer' AND f.flight_date = '2024-08-01';
 
 
 
@@ -22,14 +22,13 @@ WHERE f.flight_type = 'pleasure';
 SELECT f.flight_id, f.flight_date, f.start_time, f.duration, f.route
 FROM `Flight` f
 JOIN `Crew` c ON f.flight_id = c.flight_id
-WHERE c.pilot_id = 5069003 AND f.flight_type = 'pleasure'; -- Replace with the desired pilot_id.
-
+WHERE c.pilot_id = 5069003 AND f.flight_type = 'pleasure'; 
 
 
 -- 4. List the phone number of a given passenger.
 SELECT phone
 FROM `Passenger`
-WHERE first_name = 'Aline' AND last_name = 'Stewart'; -- Replace with the passenger's name.
+WHERE first_name = 'Aline' AND last_name = 'Stewart'; 
 
 
 
@@ -37,4 +36,4 @@ WHERE first_name = 'Aline' AND last_name = 'Stewart'; -- Replace with the passen
 SELECT f.flight_id, f.flight_date, f.start_time
 FROM `Flight` f
 JOIN `TrainingFlight` tf ON f.flight_id = tf.flight_id
-WHERE tf.instructor_id = 4906001 AND f.flight_date = '2024-08-01'; -- Replace with the instructor_id and date.
+WHERE tf.instructor_id = 4906001 AND f.flight_date = '2024-08-01';
