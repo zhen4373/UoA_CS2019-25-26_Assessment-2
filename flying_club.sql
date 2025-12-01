@@ -10,7 +10,6 @@ INSERT INTO `Rank` (`rank_id`, `rank_name`, `max_daily_flight`) VALUES
 (2, 'Chief Officer', 2),
 (3, 'Officer', 1);
 
--- Table for pilots
 CREATE TABLE `Pilot` (
    `pilot_id` INT NOT NULL AUTO_INCREMENT,
    `first_name` VARCHAR(50) NOT NULL,
@@ -22,11 +21,7 @@ CREATE TABLE `Pilot` (
    PRIMARY KEY (`pilot_id`),
    FOREIGN KEY (`rank_id`) REFERENCES `Rank`(`rank_id`)
 );
-
--- Set the starting value for pilot_id
 ALTER TABLE `Pilot` AUTO_INCREMENT = 5069001;
-
--- Insert data into the Pilot table
 INSERT INTO `Pilot` (`first_name`, `last_name`, `age`, `phone`, `email`, `rank_id`) VALUES
 ('Ann', 'Beech', 30, '0141-848-1825', 'AnnBeech@email.com', 3),
 ('Mary', 'Howe', 35, '01224-196720', 'MaryHowe@email.com', 3),
@@ -40,7 +35,6 @@ INSERT INTO `Pilot` (`first_name`, `last_name`, `age`, `phone`, `email`, `rank_i
 ('Sarah', 'Davis', 42, '0113-987-6543', 'SarahDavis@email.com', 2);
 
 
--- Table for instructors, who are also pilots
 CREATE TABLE `Instructor` (
    `instructor_id` INT NOT NULL AUTO_INCREMENT,
    `first_name` VARCHAR(50) NOT NULL,
@@ -76,7 +70,6 @@ INSERT INTO `Party` (`point_of_contact_ID`, `booking_Fname`, `booking_Lname`, `p
 ('PC-004', 'Patricia', 'Clark', '0141-999-8888', 'PatriciaClark@email.com'),
 ('PC-005', 'George', 'Harris', '01224-111-2222', 'GeorgeHarris@email.com');
 
--- Table for passengers
 CREATE TABLE `Passenger` (
    `passenger_id` INT NOT NULL AUTO_INCREMENT,
    `first_name` VARCHAR(50) NOT NULL,
@@ -89,11 +82,7 @@ CREATE TABLE `Passenger` (
    PRIMARY KEY (`passenger_id`),
    FOREIGN KEY (`party_id`) REFERENCES `Party`(`party_id`)
 );
-
--- Set the starting value for passenger_id
 ALTER TABLE `Passenger` AUTO_INCREMENT = 5061001;
-
--- Insert data into the Passenger table
 INSERT INTO `Passenger` (`first_name`, `last_name`, `age`, `phone`, `email`, `party_id`) VALUES
 ('Aline', 'Stewart', 25, '0141-848-1825', 'AlineStewart@email.com', 5072001),
 ('Mary', 'Tregear', 30, '01224-196720', 'MaryTregear@email.com', 5072001),
