@@ -13,7 +13,7 @@ SELECT p.pilot_id, p.first_name, p.last_name, r.rank_name
 FROM `Pilot` p
 JOIN `Crew` c ON p.pilot_id = c.pilot_id
 JOIN `Rank` r ON p.rank_id = r.rank_id
-WHERE c.flight_id = 1; -- Replace with the desired flight_id.
+WHERE c.flight_id = 46001; -- Replace with the desired flight_id.
 
 
 
@@ -21,7 +21,7 @@ WHERE c.flight_id = 1; -- Replace with the desired flight_id.
 SELECT f.flight_id, f.flight_date, f.start_time, f.duration, f.route
 FROM `Flight` f
 JOIN `Crew` c ON f.flight_id = c.flight_id
-WHERE c.pilot_id = 5069003 AND f.flight_type = 'pleasure';
+WHERE c.pilot_id = 5069003 AND f.flight_type = 'pleasure'; -- Replace with the desired pilot_id.
 
 
 

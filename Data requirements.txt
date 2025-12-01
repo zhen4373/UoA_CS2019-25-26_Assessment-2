@@ -22,3 +22,22 @@ Transaction requirements (I don’t think we need to change anything here):
     List all the pleasure flights a given pilot undertakes
     List the phone number of a given passenger 
     List all the training flights for a given instructor on a given date 
+
+
+
+
+
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS `Crew`;
+DROP TABLE IF EXISTS `PleasureFlight`;
+DROP TABLE IF EXISTS `TrainingFlight`;
+DROP TABLE IF EXISTS `Flight`;
+DROP TABLE IF EXISTS `Passenger`;
+DROP TABLE IF EXISTS `Party`;
+DROP TABLE IF EXISTS `Instructor`;
+DROP TABLE IF EXISTS `Pilot`;
+DROP TABLE IF EXISTS `Rank`;
+
+SET FOREIGN_KEY_CHECKS = 1;

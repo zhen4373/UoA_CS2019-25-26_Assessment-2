@@ -10,7 +10,6 @@ INSERT INTO `Rank` (`rank_id`, `rank_name`, `max_daily_flight`) VALUES
 (2, 'Chief Officer', 2),
 (3, 'Officer', 1);
 
-
 -- Table for pilots
 CREATE TABLE `Pilot` (
    `pilot_id` INT NOT NULL AUTO_INCREMENT,
@@ -23,16 +22,25 @@ CREATE TABLE `Pilot` (
    PRIMARY KEY (`pilot_id`),
    FOREIGN KEY (`rank_id`) REFERENCES `Rank`(`rank_id`)
 );
+
+-- Set the starting value for pilot_id
 ALTER TABLE `Pilot` AUTO_INCREMENT = 5069001;
+
+-- Insert data into the Pilot table
 INSERT INTO `Pilot` (`first_name`, `last_name`, `age`, `phone`, `email`, `rank_id`) VALUES
 ('Ann', 'Beech', 30, '0141-848-1825', 'AnnBeech@email.com', 3),
 ('Mary', 'Howe', 35, '01224-196720', 'MaryHowe@email.com', 3),
 ('David', 'Ford', 40, '01475-392178', 'DavidFord@email.com',1),
 ('Susan', 'Brand', 45, '0207-774-5632', 'SusanBrand@email.com',1),
 ('John', 'White', 50, '0207-774-5632', 'JohnWhite@email.com',1),
-('Julie', 'Lee', 55, '0207-774-5632', 'JulieLee@email.com',1);
+('Julie', 'Lee', 55, '0207-774-5632', 'JulieLee@email.com',1),
+('Peter', 'Jones', 28, '0131-445-1234', 'PeterJones@email.com', 3),
+('Brian', 'Smith', 52, '0141-887-4321', 'BrianSmith@email.com', 1),
+('Michael', 'Brown', 38, '0161-123-4567', 'MichaelBrown@email.com', 2),
+('Sarah', 'Davis', 42, '0113-987-6543', 'SarahDavis@email.com', 2);
 
 
+-- Table for instructors, who are also pilots
 CREATE TABLE `Instructor` (
    `instructor_id` INT NOT NULL AUTO_INCREMENT,
    `first_name` VARCHAR(50) NOT NULL,
@@ -44,7 +52,8 @@ CREATE TABLE `Instructor` (
 );
 ALTER TABLE `Instructor` AUTO_INCREMENT = 4906001;
 INSERT INTO `Instructor` (`first_name`, `last_name`, `age`, `phone`, `email`) VALUES
-('Jane', 'Doe', 40, '0207-774-5632', 'JaneDoe@email.com');
+('Jane', 'Doe', 40, '0207-774-5632', 'JaneDoe@email.com'),
+('Laura', 'Wilson', 38, '01224-555-666', 'LauraWilson@email.com');
 
 CREATE TABLE `Party` (
     `party_id` INT NOT NULL AUTO_INCREMENT,
@@ -57,11 +66,10 @@ CREATE TABLE `Party` (
 );
 ALTER TABLE `Party` AUTO_INCREMENT = 5072001;
 
-
-
 INSERT INTO `Party` (`point_of_contact_ID`, `booking_Fname`, `booking_Lname`, `phone`, `email`) VALUES
-('PC001', 'Aline', 'Stewart', '0141-848-1825', 'AlineStewart@email.com'),
-('PC002', 'John', 'Kay', '0207-774-5632', 'JohnKay@email.com');
+('PC-001', 'Aline', 'Stewart', '0141-848-1825', 'AlineStewart@email.com'),
+('PC-002', 'John', 'Kay', '0207-774-5632', 'JohnKay@email.com'),
+('PC-003', 'Chris', 'Green', '0131-222-3333', 'ChrisGreen@email.com');
 
 -- Table for passengers
 CREATE TABLE `Passenger` (
@@ -76,15 +84,20 @@ CREATE TABLE `Passenger` (
    PRIMARY KEY (`passenger_id`),
    FOREIGN KEY (`party_id`) REFERENCES `Party`(`party_id`)
 );
-ALTER TABLE `Passenger` AUTO_INCREMENT = 5061001;
-INSERT INTO `Passenger` (`first_name`, `last_name`, `age`, `phone`, `email`) VALUES
-('Aline', 'Stewart', 25, '0141-848-1825', 'AlineStewart@email.com'),
-('Mary', 'Tregear', 30, '01224-196720', 'MaryTregear@email.com'),
-('Mike', 'Ritchie', 35, '01475-392178', 'MikeRitchie@email.com'),
-('John', 'Kay', 40, '0207-774-5632', 'JohnKay@email.com'),
-('Julie', 'White', 55, '0207-774-5632', 'JulieWhite@email.com'),
-('Aydan','White', 15, '0207-774-5632', 'AydanWhite@email.com');
 
+-- Set the starting value for passenger_id
+ALTER TABLE `Passenger` AUTO_INCREMENT = 5061001;
+
+-- Insert data into the Passenger table
+INSERT INTO `Passenger` (`first_name`, `last_name`, `age`, `phone`, `email`, `party_id`) VALUES
+('Aline', 'Stewart', 25, '0141-848-1825', 'AlineStewart@email.com', 5072001),
+('Mary', 'Tregear', 30, '01224-196720', 'MaryTregear@email.com', 5072001),
+('Mike', 'Ritchie', 35, '01475-392178', 'MikeRitchie@email.com', NULL),
+('John', 'Kay', 40, '0207-774-5632', 'JohnKay@email.com', 5072002),
+('Julie', 'White', 55, '0207-774-5632', 'JulieWhite@email.com', 5072002),
+('Aydan','White', 15, '0207-774-5632', 'AydanWhite@email.com', 5072002),
+('Chris', 'Green', 42, '0131-222-3333', 'ChrisGreen@email.com', 5072003),
+('Emma', 'Green', 12, '0131-222-3333', 'EmmaGreen@email.com', 5072003);
 
 CREATE TABLE `Flight` (
    `flight_id` INT NOT NULL AUTO_INCREMENT,
@@ -93,11 +106,16 @@ CREATE TABLE `Flight` (
    `start_time` TIME NOT NULL,
    `duration` ENUM('30min', '60min', '120min', 'half-day'),
    `route` VARCHAR(50),
-   `status` ENUM('scheduled', 'cancelled', 'completed') NOT NULL,
    PRIMARY KEY (`flight_id`)
 );
 ALTER TABLE `Flight` AUTO_INCREMENT = 46001;
 
+INSERT INTO `Flight` (`flight_type`, `flight_date`, `start_time`, `duration`, `route`) VALUES
+('pleasure', '2024-08-01', '10:00:00', '60min', 'Coastal Tour'),
+('training', '2024-08-01', '14:00:00', '120min', 'Training Area B'),
+('pleasure', '2024-08-02', '11:00:00', '30min', 'City Overview'),
+('pleasure', '2024-08-03', '09:00:00', '60min', 'Loch Lomond View'),
+('training', '2024-08-03', '13:00:00', '120min', 'Training Area A');
 
 CREATE TABLE `TrainingFlight` (
     `flight_id` INT NOT NULL,
@@ -108,7 +126,8 @@ CREATE TABLE `TrainingFlight` (
 );
 
 INSERT INTO `TrainingFlight` (`flight_id`, `instructor_id`) VALUES
-(46002, 4906001);
+(46002, 4906001),
+(46005, 4906002);
 
 CREATE TABLE `PleasureFlight` (
     `flight_id` INT NOT NULL,
@@ -122,11 +141,12 @@ CREATE TABLE `PleasureFlight` (
 
 INSERT INTO `PleasureFlight` (`flight_id`, `status`, `max_passengers`, `party_id`) VALUES
 (46001, 'scheduled', 3, 5072001),
-(46003, 'completed', 2, 5072002);
+(46003, 'completed', 2, 5072002),
+(46004, 'scheduled', 2, 5072003);
 
 -- Table to assign pilots to flights
 CREATE TABLE `Crew` (
-    `Crew_ID` INT NOT NULL,
+    `Crew_ID` INT NOT NULL AUTO_INCREMENT,
     `flight_id` INT NOT NULL,
     `pilot_id` INT NOT NULL,
     `role` ENUM('First', 'Second') NOT NULL,
@@ -135,9 +155,11 @@ CREATE TABLE `Crew` (
     FOREIGN KEY (`pilot_id`) REFERENCES `Pilot`(`pilot_id`)
 );
 ALTER TABLE `Crew` AUTO_INCREMENT = 4372001;
+
 INSERT INTO `Crew` (`flight_id`, `pilot_id`, `role`) VALUES
 (46001, 5069001, 'First'),
 (46001, 5069002, 'Second'),
 (46003, 5069003, 'First'),
-(46003, 5069004, 'Second');
-
+(46003, 5069004, 'Second'),
+(46004, 5069007, 'First'),
+(46005, 5069008, 'Second');
